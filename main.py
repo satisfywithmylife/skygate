@@ -42,7 +42,7 @@ class Skygate():
     def get_headers(self):
         headers = {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryjFY5RfAjbPuClUgV',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             'Origin': 'https://skygate.skyarkchronicles.com',
             'Referer': 'https://skygate.skyarkchronicles.com/',
             'User-Agent': random_ua(),
