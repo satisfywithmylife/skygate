@@ -4,6 +4,24 @@ from eth_account.messages import encode_defunct
 import time
 from web3 import Web3
 from pyuseragents import random as random_ua
+from functools import wraps
+
+def retry(max_retries=3, wait_time=1):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            retries = 0
+            while retries < max_retries:
+                try:  
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    print(f"Caught exception {e}, retrying in {wait_time} seconds...")
+                    retries += 1
+                    time.sleep(wait_time)
+            raise Exception(f"Max retries exceeded ({max_retries})")
+
+        return wrapper
+    return decorator
 
 class Skygate():
 
@@ -19,6 +37,7 @@ class Skygate():
         self.is_daily = is_daily
         self.proxy = proxy
 
+    @retry(max_retries=30, wait_time=5)
     def get_info(self):
         # 根据jwt获取账号信息
         url = self.host.format('get_skyGate_coin.php')
@@ -56,6 +75,7 @@ class Skygate():
 
         return headers
 
+    @retry(max_retries=30, wait_time=5)
     def login(self):
         # 获取登录态jwt
         if self.jwt:
@@ -88,6 +108,7 @@ class Skygate():
         #{"err":0,"msg":"verify_success","jwt":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1SWQiOiIyMTI0NDA4NSIsInVXYWxsZXRBZGRyIjoiMHgxYWQ0NTMwNjhkMTgwOGUyMTNiNDZjZTQxNWE1MWQzOGI4NDE5ZTU3In0.shwMdrnWwqQJy3taJxhT2_mIsPsCF3e8CsWsmm_oTG4xhZsh_WOEqQlWC7AULffc1hj3xrx6btwEcXBO_MXu8yPqkDF6LN1rPtVNLEK3ISOCpbzfHMcMOpodZgmsPsd3YkDkqAnklQIO6rW3wAKhWgbZO1HHW5fhQM8sN-7cWXo","uWalletAddr":"0x1ad453068d1808e213b46ce415a51d38b8419e57"}
         return self.jwt
     
+    @retry(max_retries=30, wait_time=5)
     def checkin(self):
         # 签到
         url = self.host.format('checkIn_skyGate_member.php')
@@ -103,6 +124,8 @@ class Skygate():
 
         res = res.json()
         if res['err'] != 0:
+            if res["0"] == "already rewarded the daily points":
+                return True
             raise Exception(f'{self.account.address} checkin error, error code {res["err"]}, error message {res["0"]}')  
         
         # {"err":1,"0":"already rewarded the daily points"}
