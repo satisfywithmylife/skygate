@@ -26,7 +26,7 @@ class Skygate():
             'api_token': '3C2D36F79AFB3D5374A49BE767A17C6A3AEF91635BF7A3FB25CEA8D4DD',
             'jwt': self.login()
         }
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy)
+        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'get_info error, status code {res.status_code}')
         
@@ -66,7 +66,7 @@ class Skygate():
         if self.invite_code:
             payload['inviter'] = self.invite_code
 
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy)
+        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'login error, status code {res.status_code}')
         
@@ -87,7 +87,7 @@ class Skygate():
             'jwt': self.login()
         }
 
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy)
+        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'checkin error, status code: {res.status_code}')  
 
