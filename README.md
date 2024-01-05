@@ -7,7 +7,7 @@
 
 ## ⚡ 安装
 + 安装 [python](https://www.google.com/search?client=opera&q=how+install+python)
-+ [下载项目](https://sites.northwestern.edu/researchcomputing/resources/downloading-from-github) and unzip repository
++ [下载项目](https://sites.northwestern.edu/researchcomputing/resources/downloading-from-github) 并解压
 + 安装依赖包:
 ```python
 pip install web3
