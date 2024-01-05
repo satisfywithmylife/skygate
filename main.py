@@ -1,5 +1,6 @@
 import requests
 from eth_account import Account
+from eth_account.messages import encode_defunct
 import time
 from web3 import Web3
 from pyuseragents import random as random_ua
@@ -41,7 +42,7 @@ class Skygate():
     def get_headers(self):
         headers = {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'multipart/form-data;',
+            'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryjFY5RfAjbPuClUgV',
             'Origin': 'https://skygate.skyarkchronicles.com',
             'Referer': 'https://skygate.skyarkchronicles.com/',
             'User-Agent': random_ua(),
@@ -60,19 +61,16 @@ class Skygate():
         if self.jwt:
             return self.jwt
         
-        message_hash = Web3.keccak(text=self.sign_str)
-        sign = self.account.signHash(message_hash)
-        print(sign)
+        msghash = encode_defunct(text=self.sign_str)
+        sign = Account.sign_message(msghash, self.pk)
+       
         url = self.host.format('wallet_signin.php')
-        print(url)
         payload = {
             'api_id': 'skyark_react_api',
             'api_token': '3C2D36F79AFB3D5374A49BE767A17C6A3AEF91635BF7A3FB25CEA8D4DD',
             'uWalletAddr': str(self.account.address),
             'sign': str(sign.signature.hex())
         }
-        #0x585c34b66c7ca5a20ba3f73343600c883fa1c6c4b583aec9df1ddbeef4e4bd5461b34bd4dd0a3de543e1f93adac8e4cda43ae55a059e02f61f365de87f85c0921b
-        print(payload)
         if self.invite_code:
             payload['inviter'] = self.invite_code
 
