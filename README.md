@@ -11,7 +11,7 @@
 + 安装依赖包:
 ```python
 pip install web3
-pip install pyuseragent
+pip install pyuseragents
 ```
 
 ## 💻 第一次跑
