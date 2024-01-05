@@ -1,20 +1,20 @@
 <h1 align="center">Skygate</h1>
 
-<p align="center">Registration of referrals for the <a href="https://skygate.skyarkchronicles.com/">Skygate</a></p>
+<p align="center">注册推荐小号<a href="https://skygate.skyarkchronicles.com/">Skygate</a></p>
 <p align="center">
 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
 </p>
 
-## ⚡ Installation
-+ Install [python](https://www.google.com/search?client=opera&q=how+install+python)
-+ [Download](https://sites.northwestern.edu/researchcomputing/resources/downloading-from-github) and unzip repository
-+ Install requirements:
+## ⚡ 安装
++ 安装 [python](https://www.google.com/search?client=opera&q=how+install+python)
++ [下载项目](https://sites.northwestern.edu/researchcomputing/resources/downloading-from-github) and unzip repository
++ 安装依赖包:
 ```python
 pip install web3
 pip install pyuseragent
 ```
 
-## 💻 第一次跑，会把主号和小号保存在当前文件夹下的 checkin_account.txt 文件内
+## 💻 第一次跑
 ```python
 proxy = {}
 # 代理
@@ -49,7 +49,6 @@ for i in range(main_account_num):
 ```
 
 ## ✔️ 日常签到
-+ Run the bot:
 ```python
 proxy = {}
 # 代理
