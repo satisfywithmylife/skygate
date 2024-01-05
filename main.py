@@ -135,6 +135,7 @@ class Skygate():
                 sg.checkin()
             except Exception as e:
                 print(str(e))
+                time.sleep(3)
                 continue
  
     @staticmethod
@@ -164,6 +165,7 @@ for i in range(main_account_num):
         main_sg.checkin()
     except Exception as e:
         print(str(e))
+        time.sleep(3)
         continue
     invite_code = str(main_sg.account.address)
     for z in range(invite_num):
@@ -173,6 +175,7 @@ for i in range(main_account_num):
             sub_sg.checkin()
         except Exception as e:
             print(str(e))
+            time.sleep(3)
             continue
 # ==================================每日签到==================================
 # Skygate.daily_checkin(proxy)
