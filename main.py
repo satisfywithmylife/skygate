@@ -175,4 +175,4 @@ for i in range(main_account_num):
             print(str(e))
             continue
 # ==================================每日签到==================================
-Skygate.daily_checkin(proxy)
+# Skygate.daily_checkin(proxy)
