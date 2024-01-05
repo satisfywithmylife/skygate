@@ -26,13 +26,14 @@ class Skygate():
             'api_token': '3C2D36F79AFB3D5374A49BE767A17C6A3AEF91635BF7A3FB25CEA8D4DD',
             'jwt': self.login()
         }
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
+        res = requests.post(url=url, data=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'get_info error, status code {res.status_code}')
         
         res = res.json()
-        if res.err != 0:
-            raise Exception(f'get_info error, errr code {res.err}, error message {res.msg}')
+     
+        if res['err'] != 0:
+            raise Exception(f'get_info error, errr code {res["err"]}, error message {res["msg"]}')
 
         # {"err":0,"uName":"0x1ad453068d1808e213b46ce415a51d38b8419e57","gateWalletAddr":"9aPW9RhQ9c9eWBK","uWalletAddr":"0x1ad453068d1808e213b46ce415a51d38b8419e57","coin":"100","participationTime":"","week":"","scheduleStart":1700179200,"scheduleEnd":1734393599,"joinAmount":"100","additionalCost":"0","winAnnDate":1702857600,"advName":"31thadvanture","inviteCode":"9aPW9","uId":"21244085","userLevel":"1"}
         return res
@@ -40,10 +41,16 @@ class Skygate():
     def get_headers(self):
         headers = {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryJRtMZiW3NAX2JJIi',
+            'Content-Type': 'multipart/form-data;',
             'Origin': 'https://skygate.skyarkchronicles.com',
             'Referer': 'https://skygate.skyarkchronicles.com/',
-            'User-Agent': random_ua()
+            'User-Agent': random_ua(),
+            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'cross-site',
         }
 
         return headers
@@ -55,27 +62,30 @@ class Skygate():
         
         message_hash = Web3.keccak(text=self.sign_str)
         sign = self.account.signHash(message_hash)
+        print(sign)
         url = self.host.format('wallet_signin.php')
+        print(url)
         payload = {
             'api_id': 'skyark_react_api',
             'api_token': '3C2D36F79AFB3D5374A49BE767A17C6A3AEF91635BF7A3FB25CEA8D4DD',
             'uWalletAddr': str(self.account.address),
             'sign': str(sign.signature.hex())
         }
-
+        #0x585c34b66c7ca5a20ba3f73343600c883fa1c6c4b583aec9df1ddbeef4e4bd5461b34bd4dd0a3de543e1f93adac8e4cda43ae55a059e02f61f365de87f85c0921b
+        print(payload)
         if self.invite_code:
             payload['inviter'] = self.invite_code
 
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
+        res = requests.post(url=url, data=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'login error, status code {res.status_code}')
         
         res = res.json()
-        if res.err != 0:
-            raise Exception(f'login error, errr code {res.err}, error message {res.msg}')
+        if res['err'] != 0:
+            raise Exception(f'login error, errr code {res["err"]}, error message {res["msg"]}')
         
         #{"err":0,"msg":"verify_success","jwt":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1SWQiOiIyMTI0NDA4NSIsInVXYWxsZXRBZGRyIjoiMHgxYWQ0NTMwNjhkMTgwOGUyMTNiNDZjZTQxNWE1MWQzOGI4NDE5ZTU3In0.shwMdrnWwqQJy3taJxhT2_mIsPsCF3e8CsWsmm_oTG4xhZsh_WOEqQlWC7AULffc1hj3xrx6btwEcXBO_MXu8yPqkDF6LN1rPtVNLEK3ISOCpbzfHMcMOpodZgmsPsd3YkDkqAnklQIO6rW3wAKhWgbZO1HHW5fhQM8sN-7cWXo","uWalletAddr":"0x1ad453068d1808e213b46ce415a51d38b8419e57"}
-        self.jwt = res.jwt
+        self.jwt = res['jwt']
         return self.jwt
     
     def checkin(self):
@@ -87,13 +97,13 @@ class Skygate():
             'jwt': self.login()
         }
 
-        res = requests.post(url=url, params=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
+        res = requests.post(url=url, data=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
             raise Exception(f'checkin error, status code: {res.status_code}')  
 
         res = res.json()
-        if res.err != 0:
-            raise Exception(f'checkin error, errr code: {res.err}, error message: {res.msg}')  
+        if res['err'] != 0:
+            raise Exception(f'checkin error, errr code {res["err"]}, error message {res["msg"]}')  
         
         # {"err":1,"0":"already rewarded the daily points"}
         # {"err":0,"dailyGift":50,"SlimeGift":0,"fullCost":150,"dailyclaimInWeek":[{"Time":1704267789,"Amount":"50"},{"Time":1704422086,"Amount":"50"}],"indicator":1}
