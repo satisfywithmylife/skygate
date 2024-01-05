@@ -97,11 +97,11 @@ class Skygate():
 
         res = requests.post(url=url, data=payload, timeout=30, proxies=self.proxy, headers=self.get_headers())
         if res.status_code != 200:
-            raise Exception(f'checkin error, status code: {res.status_code}')  
+            raise Exception(f'{self.account.address} checkin error, status code: {res.status_code}')  
 
         res = res.json()
         if res['err'] != 0:
-            raise Exception(f'checkin error, errr code {res["err"]}, error message {res["0"]}')  
+            raise Exception(f'{self.account.address} checkin error, errr code {res["err"]}, error message {res["0"]}')  
         
         # {"err":1,"0":"already rewarded the daily points"}
         # {"err":0,"dailyGift":50,"SlimeGift":0,"fullCost":150,"dailyclaimInWeek":[{"Time":1704267789,"Amount":"50"},{"Time":1704422086,"Amount":"50"}],"indicator":1}
