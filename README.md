@@ -61,7 +61,7 @@ Skygate.daily_checkin(proxy)
 
 ## ✔️ 日常探索，收集宝藏，探险
 ```python
-Skygate.Skygate.daily_explore_treasure_adventure()
+Skygate.daily_explore_treasure_adventure()
 ```
 **第一次跑，会把主号和小号保存在当前文件夹下的 ```checkin_account.txt``` 文件内**
 
