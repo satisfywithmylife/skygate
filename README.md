@@ -67,7 +67,7 @@ Skygate.Skygate.daily_explore_treasure_adventure()
 
 **日常签到，自动把 ```checkin_account.txt``` 文件内的账号跑一遍签到，无需gas**
 
-**日常```探索(每日1次)，收集宝藏(每日6次)，探险(每日6次)```，自动把 ```checkin_account.txt``` 文件内的账号跑一遍, 三种任务需要钱包有在opbnb链有bnb作为gas，其中```收集宝藏，探险```需要账户有史莱姆nft**
+**日常```探索(每日1次)，收集宝藏(每日6次)，探险(每日6次)```，自动把 ```checkin_account.txt``` 文件内的账号跑一遍, 三种任务需要钱包有在opbnb链有bnb作为gas，其中```收集宝藏，探险```需要账户有史莱姆nft，自动检测是否满足条件，不符合条件的会跳过**
 
 + [史莱姆nft购买](https://element.market/collections/skygate)
 
