@@ -266,7 +266,7 @@ class Skygate():
                 try:
                     sg.treasure()
                 except Exception as e:
-                    print(f'{sg.account.address} , reason {e}, skip collect treasure')
+                    print(f'{sg.account.address} treasure error, reason {e}, skip collect treasure')
                     break
             print(f'========================={sg.account.address} daily explore_treasure_adventure end============================')
 
