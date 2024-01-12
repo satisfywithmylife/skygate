@@ -302,65 +302,7 @@ class MyFileDropTarget(wx.FileDropTarget):
         self.handle.file_drop_handle(filenames)
 
 
-class MyGridTable():
-    def __init__(self, title, data):
-        self.title = title # 标题
-        self.data = data # 数据内容
 
-
-    def create_table(self, panel):
-        # 创建表格（大小）
-        gridTable = grid.Grid(panel, -1)
-        # 设置行列数
-        gridTable.CreateGrid(len(self.data), len(self.title))
-        # 设置单元格最小的和高度
-        # gridTable.SetColSizes(grid.GridSizesInfo(80, []))
-        # gridTable.SetRowSizes(grid.GridSizesInfo(15, []))
-        # 将第0列设置为选中框（该框将按照存入的值来判断，0是未选中，1是选中）
-        gridTable.SetColFormatBool(0)
-        index = 0
-        while index < len(self.title):
-            gridTable.SetColLabelValue(index, self.title[index])
-            index += 1
-        # 设置标签居中显示
-        gridTable.SetCornerLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
-        # 设置表格内容居中显示
-        gridTable.SetDefaultCellAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
-        # 设置表格为不可编辑
-        gridTable.EnableEditing(False)
-        # 清除
-        gridTable.ClearGrid()
-        # 获取表格的行数
-        grid_row_number = gridTable.GetNumberRows() - 1
-        # 清除表格的行
-        gridTable.DeleteRows(0, grid_row_number)
-        gridTable.AppendRows(len(self.data) - 1)
-        for row in range(0, len(self.data)):
-            report_list_item = self.data[row]
-            # 处理从数据库获得的数据
-            report_grid_dict = {
-                '0': '1',
-                '1': report_list_item["id"],
-                '2': report_list_item["name"],
-                '3': report_list_item["cost"],
-                '4': report_list_item["result"],
-                '5': '查看'
-            }
-            for column in range(0, len(self.title)):
-               
-                # 将数据插入到第row行第column列
-                gridTable.SetCellValue(row, column, str(report_grid_dict[str(column)]))
-                # 根据结果修改表格的显示颜色
-                if report_list_item["result"] == "Pass":
-                    gridTable.SetCellTextColour(row, 4, wx.Colour('#237804'))
-                else:
-                    gridTable.SetCellTextColour(row, 4, wx.Colour('#f5222d'))
-                gridTable.SetCellTextColour(row, 5, wx.Colour('#2395f1'))
-                gridTable.SetCellFont(row, 5, wx.Font(10, wx.FONTFAMILY_DEFAULT,
-                                                           wx.FONTSTYLE_NORMAL,
-                                                           wx.FONTWEIGHT_NORMAL, True))
-
-        return gridTable
 
 class BaseBatchWx():
 
@@ -394,18 +336,6 @@ class BaseBatchWx():
         self.height += 1
         self.frame.SetDropTarget(MyFileDropTarget(self))
         self.log_box.SetDropTarget(MyFileDropTarget(self))
-
-        title = ['选择', 'ID', '报告名称', '耗时', '执行结果', "内容"]
-        data = [
-            {"id": 1, "name": "报告名称1", "cost": "2小时", "result": "Pass"},
-            {"id": 2, "name": "报告名称2", "cost": "1.8小时", "result": "Fail"},
-            {"id": 3, "name": "报告名称3", "cost": "2.9小时", "result": "Pass"},
-            {"id": 4, "name": "报告名称4", "cost": "3.6小时", "result": "Fail"}
-        ]
-        # gt = MyGridTable(title=title, data=data)
-
-        # self.sizer.Add(gt.create_table(self.panel), pos=(self.height, 0), span=(0, 11+len(title)), flag=self.wx.EXPAND | self.wx.ALL, border=7*self.scale)
-        # self.height += 1
 
         # 初始化日志
         self.topic_name = 'update_log'
