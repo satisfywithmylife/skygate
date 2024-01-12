@@ -374,7 +374,7 @@ class BaseBatchWx():
         self.icon_type = wx.BITMAP_TYPE_ICO
         self.icon = f'{icon}'
         self.wx_config = {
-            'title': 'evm交互脚本-推@shawngmy',
+            'title': '交互脚本-skyark',
             'size': (600*self.scale, 200*self.scale) # 第一个是控件宽度，第二个是日志控件的高度
         }
         self.app: wx.App = wx.App()
@@ -422,7 +422,7 @@ class BaseBatchWx():
     def init_log(self)->list:
         return [
             #'撸毛工具 合作v：a17682157736， 推：@shawngmy',
-            '撸毛工具 合作 推：@shawngmy',
+            '撸毛工具嘀嘀嘀',
         ]
 
     def file_drop_handle(self, filenames):
@@ -447,6 +447,7 @@ class BaseBatchWx():
         main_account_num = 100
         # 每个主钱包邀请的小号数
         invite_num = 20
+
         for i in range(main_account_num):
             main_account_pk = Skygate.get_random_account_pk()
             main_sg = Skygate(pk=main_account_pk, proxy=proxy)
@@ -454,9 +455,8 @@ class BaseBatchWx():
                 main_sg.checkin()
             except Exception as e:
                 self.wx.CallAfter(pub.sendMessage, self.topic_name, msg=f'{e}')
-                time.sleep(3)
                 continue
-            invite_code = str(main_sg.account.address)
+            invite_code = value if value else str(main_sg.account.address)
             for z in range(invite_num):
                 sub_account_pk = Skygate.get_random_account_pk()
                 sub_sg = Skygate(pk=sub_account_pk, invite_code=invite_code, proxy=proxy)
@@ -464,11 +464,11 @@ class BaseBatchWx():
                     sub_sg.checkin()
                 except Exception as e:
                     self.wx.CallAfter(pub.sendMessage, self.topic_name, msg=f'{e}')
-                    time.sleep(3)
                     continue
+            value = ''
 
     def task2(self, *args):
-        Skygate.daily_checkin()
+        Skygate.daily_checkin({})
 
     def task3(self, *args):
         Skygate.daily_explore_treasure_adventure()
