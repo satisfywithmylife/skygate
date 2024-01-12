@@ -77,6 +77,23 @@ Skygate.daily_explore_treasure_adventure()
 
 **已经优化加入自动重试机制**
 
+## 操作页面
+
++ 会python的直接看main.py即可
+  
++ 不会的看下面
+
+```python
+pip install pypubsub
+pip install wxpython
+执行 python go.py
+```
+<img width="600" alt="image" src="https://github.com/satisfywithmylife/skygate/assets/30144807/437e5977-cd19-4ed1-a3a6-cc9fad53e6a9">
+
++ 输入框填入自己的大号以太坊地址，前20个小号会用大号的邀请码作为邀请人注册
+
++ 每日手动点击，安逸～～～
+
 ## 📧 Contacts
 + 推特 - [@shawngmy](https://twitter.com/shawngmy)
 + tks for following，if u want get more info
